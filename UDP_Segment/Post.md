@@ -4,7 +4,7 @@
 1. [이 실습을 진행하는 목적](#1-이-실습을-진행하는-목적)
 2. [실습 전 준비사항](#2-실습-전-준비사항)
 3. [Gateway로 파일을 보낸 경우](#3-gateway로-파일을-보낸-경우)
-4. [그 외의 서버와 프로토콜로 파일을 보낸 경우](#4-그-외의-서버와-프로토콜로-파일을-보낸-경우)
+4. [HeX값 수정해보기](#4-hex값-수정해보기)
 5. [마무리](#5-마무리)
 ---
 ### 1. 이 실습을 진행하는 목적
@@ -23,8 +23,6 @@
 | Server | Adress | Port |
 |:---|:---|:---|
 | L3 Gateway | 172.30.1.254 | 6000 |
-| NAS | 192.168.50.100 | 9443 |
-| Blog | chals.kim | 443 |
 ---
 ### 3. Gateway로 파일을 보낸 경우
 - Packet Sender를 다음과 같이 설정했습니다.
@@ -65,9 +63,15 @@ ip.addr==172.30.1.254 && ip.proto==UDP && !ssdp
 
 ![image](https://github.com/kimch0612/Data_Communication/assets/10193967/fa295add-c7b2-45a0-bc92-9d7bcf28df58)
 ![image](https://github.com/kimch0612/Data_Communication/assets/10193967/66c40976-0118-49a1-9094-5fe3772085b5)
+- 마지막으로 패킷을 받은 서버가 보낸 응답 패킷을 확인해보았습니다.
+- 패킷을 보낸 목적지는 존재하나, 6000번 포트는 열려있지 않으므로 (서비스하고 있지 않으므로) Port unreachable 응답을 받은걸 확인할 수 있었습니다. 
 
+![image](https://github.com/kimch0612/Data_Communication/assets/10193967/005df1f2-8735-4b37-b31d-300eee78ea50)
+- 마지막으로, 전송이 불가능한 경우의 패킷이 아니라 실제로 전송에 성공한 패킷을 보고싶어서 간단하게 파이썬으로 UDP 소켓 프로그램을 작성해보았습니다.
+
+![image](https://github.com/kimch0612/Data_Communication/assets/10193967/a5ce7ec2-cd15-44c0-b71a-037f99bf874c)
 ---
-### 4. 그 외의 서버와 프로토콜로 파일을 보낸 경우
+### 4. HeX값 수정해보기
 ---
 ### 5. 마무리
 ---
