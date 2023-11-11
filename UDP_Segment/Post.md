@@ -67,9 +67,10 @@ ip.addr==172.30.1.254 && ip.proto==UDP && !ssdp
 - 패킷을 보낸 목적지는 존재하나, 6000번 포트는 열려있지 않으므로 (서비스하고 있지 않으므로) Port unreachable 응답을 받은걸 확인할 수 있었습니다. 
 
 ![image](https://github.com/kimch0612/Data_Communication/assets/10193967/005df1f2-8735-4b37-b31d-300eee78ea50)
-- 마지막으로, 전송이 불가능한 경우의 패킷이 아니라 실제로 전송에 성공한 패킷을 보고싶어서 간단하게 파이썬으로 UDP 소켓 프로그램을 작성해보았습니다.
+- 마지막으로, 전송이 불가능한 경우의 패킷이 아니라 실제로 전송에 성공한 패킷을 보고 싶어서 간단하게 파이썬으로 UDP 소켓 프로그램을 작성해서 테스트해 보았습니다.
+- 위와 다르게 까만색 ICMP 메시지가 안 뜨고 MTU값(1500)에 따라 잘 전송된 것을 확인할 수 있었습니다.
 
-![image](https://github.com/kimch0612/Data_Communication/assets/10193967/a5ce7ec2-cd15-44c0-b71a-037f99bf874c)
+![image](https://github.com/kimch0612/Data_Communication/assets/10193967/275858de-5f02-426e-b76c-6be8bfcf8f0a)
 ---
 ### 4. HeX값 수정해보기
 ---
