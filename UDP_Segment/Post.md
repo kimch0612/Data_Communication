@@ -10,7 +10,7 @@
 ### 1. 이 실습을 진행하는 목적
 - 패킷은 한 번에 보낼 수 있는 사이즈가 정해져있는데, 그보다 큰 파일을 전송할 시에 운영체제가 패킷을 어떻게 핸들링 하는지에 대해서 확인하고자 합니다.
 - 실습에 들어가기 앞서, 지난 시간에 배운 내용을 바탕으로 이론을 정리해보자면 다음과 같습니다.
-  - 위에서 언급했듯이 패킷은 한번에 보낼 수 있는 최대의 사이즈가 1460Bytes(UDP의 경우)로 정해져있습니다. 이것을 Maximum Segment Size (a.k.a. MSS)라고 합니다.
+  - 위에서 언급했듯이 패킷은 한번에 보낼 수 있는 최대의 사이즈가 1460Bytes로 정해져있습니다. 이것을 Maximum Segment Size (a.k.a. MSS)라고 합니다.
   - MSS보다 큰 사이즈를 사용자가 수/송신하고자 한다면 OSI 4계층에 의해 패킷이 Slice되게 되는데, 이러한 이유로 4계층을 Segment라고 부릅니다.
   - Slice된 패킷에는 앞쪽에 Header가 추가로 붙게 되는데, UDP가 TCP보다 Header의 크기가 상대적으로 작으므로 (TCP의 경우에는 20Bytes+@이지만 UDP는 8Bytes) UDP가 TCP에 비해 비교적 더 빠르고 원할한 통신을 할 수 있습니다.
   - Slice된 패킷의 Header를 살펴보면 맨 마지막 패킷을 제외한 그 외의 패킷들에겐 자신이 어떤 프로토콜로 통신중인지 명시돼있지 않으며, 맨 마지막 패킷에 프로토콜이 명시돼있습니다.
@@ -27,6 +27,30 @@
 | Blog | chals.kim | 443 |
 ---
 ### 3. Gateway로 파일을 보낸 경우
+- Packet Sender를 다음과 같이 설정했습니다.
+
+![image](https://github.com/kimch0612/Data_Communication/assets/10193967/563385cd-6db4-401b-adf6-70c08abaf4c3)
+- Wireshark에서 아래의 필터 옵션을 넣은 상태로 Packet Sender에서 Send를 눌렀을때의 결과창입니다.
+```
+ip.addr==172.30.1.254 && ip.proto==UDP && !ssdp
+
+#ip.addr==172.30.1.254: 172.30.1.254와 통신한 패킷만 출력합니다.
+#ip.proto==UDP: 통신할 때 사용된 프로토콜이 UDP인 패킷만 출력합니다.
+                교수님께서 제공해주신 자료에는 udp라고 작성돼있는데,
+                소문자로 작성하니 오류가 나는 관계로 대문자로 작성했습니다.
+#!ssdp: 프로토콜이 ssdp인 패킷은 출력되지 않게 막습니다.
+
+#리눅스/유닉스 또는 프로그래밍 언어에서 자주 사용했던 Pipeline과 Not 연산자를 이곳에서도 사용할 수 있다는 것을 처음으로 알았습니다.
+``` 
+
+![image](https://github.com/kimch0612/Data_Communication/assets/10193967/029e86ef-cccd-4cc2-a0ce-6070914208dd)
+- 패킷을 자세히 보면 "Fragmented"라고 표시돼있는 것을 확인할 수 있는데, 제가 배웠던 이론대로 조각난(Fragmented)것을 알 수 있었습니다.
+
+![image](https://github.com/kimch0612/Data_Communication/assets/10193967/9d679e9b-32bf-40a3-96ea-f9d8d2e66c86)
+- 이번엔 Length를 살펴보았습니다. 패킷의 총 사이즈는 1514Byes, 전송된 데이터의 사이즈는 1480Bytes입니다.
+
+![image](https://github.com/kimch0612/Data_Communication/assets/10193967/e2ac5ee9-9dc4-4f16-b70f-886ed8b1dcfe)
+
 ---
 ### 4. 그 외의 서버와 프로토콜로 파일을 보낸 경우
 ---
