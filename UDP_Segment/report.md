@@ -64,7 +64,7 @@ ip.addr==172.30.1.254 && ip.proto==UDP && !ssdp
 
 ![image](https://github.com/kimch0612/Data_Communication/assets/10193967/fa295add-c7b2-45a0-bc92-9d7bcf28df58)
 ![image](https://github.com/kimch0612/Data_Communication/assets/10193967/66c40976-0118-49a1-9094-5fe3772085b5)
-- 마지막으로 패킷을 받은 서버가 보낸 응답 패킷을 확인해보았습니다.
+- 다음으로 패킷을 받은 서버가 보낸 응답 패킷을 확인해보았습니다.
 - 패킷을 보낸 목적지는 존재하나, 6000번 포트는 열려있지 않으므로 (서비스하고 있지 않으므로) Port unreachable 응답을 받은걸 확인할 수 있었습니다. 
 
 ![image](https://github.com/kimch0612/Data_Communication/assets/10193967/005df1f2-8735-4b37-b31d-300eee78ea50)
