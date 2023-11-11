@@ -47,9 +47,16 @@ ip.addr==172.30.1.254 && ip.proto==UDP && !ssdp
 - 패킷을 자세히 보면 "Fragmented"라고 표시돼있는 것을 확인할 수 있는데, 제가 배웠던 이론대로 조각난(Fragmented)것을 알 수 있었습니다.
 
 ![image](https://github.com/kimch0612/Data_Communication/assets/10193967/9d679e9b-32bf-40a3-96ea-f9d8d2e66c86)
-- 이번엔 Length를 살펴보았습니다. 패킷의 총 사이즈는 1514Byes, 전송된 데이터의 사이즈는 1480Bytes입니다.
+- 이번엔 Length를 살펴보았습니다. 패킷의 총 사이즈는 1514Bytes, 전송된 데이터의 사이즈는 1480Bytes입니다.
+- 다만 제가 생각한 대로라면 패킷의 총 사이즈가 1460Bytes를 넘으면 안 될 것 같은데, 이 패킷들은 그 사이즈를 넘긴게 이상해서 MSS 관련 Reference를 찾아보았더니 이건 TCP에서만 사용하는 매커니즘이라는 것을 알게되었습니다.
+  - TCP는 연결 지향성과 신뢰성이라는 특성을 제공하기 위해 세부적인 설정과 관리가 필요하며, 그렇기 때문에 MSS와 같은 매커니즘이 사용된다고 합니다.
+  - UDP의 경우에는 별도로 MSS를 정의하지 않았기 때문에 원래는 패킷이 Slice되지 않는게 맞는데, 네트워크 / 운영체제 시스템의 MTU값에 따라 패킷을 Slice하기 때문에 결국에는 Fragmented 되는 것이라고 합니다.
+  - [참고문헌 1](https://www.cloudflare.com/ko-kr/learning/network-layer/what-is-mss/) / [참고문헌 2](https://ejjoo.github.io/network/2020/01/09/tcp-mss-udp.html)
 
 ![image](https://github.com/kimch0612/Data_Communication/assets/10193967/e2ac5ee9-9dc4-4f16-b70f-886ed8b1dcfe)
+- 위에서 확인한 내용을 검증해보기 위해 이번에는 MTU의 값을 변경해서 패킷을 전송해보았습니다. MTU의 값을 1000으로 변경해보았더니 패킷의 사이즈들이 정말로 감소한 것을 확인할 수 있었습니다.
+
+![image](https://github.com/kimch0612/Data_Communication/assets/10193967/f2b9da9c-950e-469c-91fe-18b20ee54a7f)
 
 ---
 ### 4. 그 외의 서버와 프로토콜로 파일을 보낸 경우
