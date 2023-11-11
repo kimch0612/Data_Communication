@@ -15,6 +15,7 @@
   - Slice된 패킷에는 앞쪽에 Header가 추가로 붙게 되는데, UDP가 TCP보다 Header의 크기가 상대적으로 작으므로 (TCP의 경우에는 20Bytes+@이지만 UDP는 8Bytes) UDP가 TCP에 비해 비교적 더 빠르고 원할한 통신을 할 수 있습니다.
   - Slice된 패킷의 Header를 살펴보면 맨 마지막 패킷을 제외한 그 외의 패킷들에겐 자신이 어떤 프로토콜로 통신중인지 명시돼있지 않으며, 맨 마지막 패킷에 프로토콜이 명시돼있습니다.
   - 맨 마지막 패킷에는 프로토콜뿐 아니라 Slice된 Data의 사이즈와 패킷을 재조합했을 때의 사이즈도 명시돼있습니다.
+  - 잘못된 곳에 패킷을 전송하게 되면 ICMP 프로토콜로 응답을 받게 되는데, 응답받은 패킷에 어떤 잘못된 사항이 있는지 기재되어 있습니다.
 ---
 ### 2. 실습 전 준비사항
 - 패킷을 보내는 프로그램으로는 [Packet Sender](https://packetsender.com/)를 이용할 것이며, 전송할 파일은 [대학의 공식 로고 이미지](https://nsu.ac.kr/res/service/img/common/btn_logo_header.png)를 이용할 것입니다.
@@ -67,12 +68,22 @@ ip.addr==172.30.1.254 && ip.proto==UDP && !ssdp
 - 패킷을 보낸 목적지는 존재하나, 6000번 포트는 열려있지 않으므로 (서비스하고 있지 않으므로) Port unreachable 응답을 받은걸 확인할 수 있었습니다. 
 
 ![image](https://github.com/kimch0612/Data_Communication/assets/10193967/005df1f2-8735-4b37-b31d-300eee78ea50)
-- 마지막으로, 전송이 불가능한 경우의 패킷이 아니라 실제로 전송에 성공한 패킷을 보고 싶어서 간단하게 파이썬으로 UDP 소켓 프로그램을 작성해서 테스트해 보았습니다.
+- 마지막으로, 전송이 불가능한 경우의 패킷이 아니라 실제로 전송에 성공한 패킷을 보고 싶어서 간단하게 파이썬으로 UDP 소켓 프로그램을 작성해서 테스트해 보았습니다. ( [server.py](./server.py) / [client.py](./client.py) )
 - 위와 다르게 까만색 ICMP 메시지가 안 뜨고 MTU값(1500)에 따라 잘 전송된 것을 확인할 수 있었습니다.
 
+![image](https://github.com/kimch0612/Data_Communication/assets/10193967/8cf4f85e-956a-434f-8941-2df7692e9dba)
 ![image](https://github.com/kimch0612/Data_Communication/assets/10193967/275858de-5f02-426e-b76c-6be8bfcf8f0a)
+
 ---
 ### 4. HeX값 수정해보기
+- 이번에는 UDP 패킷의 Payload 값을 복사해서 HxD 애플리케이션에 붙여넣고, payload.png 파일로 저장해보았습니다.
+  - 그 결과 제가 처음에 테스트를 위해 저장한 파일과 동일한 이미지가 뜬 것을 확인할 수 있었습니다.
+
+![image](https://github.com/kimch0612/Data_Communication/assets/10193967/9d97585a-2f39-4047-b8d7-8c41e73734b0)
+- 그리고 Hex값을 고의로 수정하였더니 이미지 중 일부가 손상된 것 또한 확인할 수 있었습니다.
+
+![image](https://github.com/kimch0612/Data_Communication/assets/10193967/1742524e-341a-4ad5-9eed-9e8354a60198)
+
 ---
 ### 5. 마무리
 ---
