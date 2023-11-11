@@ -17,6 +17,14 @@
   - 맨 마지막 패킷에는 프로토콜뿐 아니라 Slice된 Data의 사이즈와 패킷을 재조합했을 때의 사이즈도 명시돼있습니다.
 ---
 ### 2. 실습 전 준비사항
+- 패킷을 보내는 프로그램으로는 [Packet Sender](https://packetsender.com/)를 이용할 것이며, 전송할 파일은 [대학의 공식 로고 이미지](https://nsu.ac.kr/res/service/img/common/btn_logo_header.png)를 이용할 것입니다.
+- 패킷을 보낼 서버는 다음과 같습니다.
+
+| Server | Adress | Port |
+|:---|:---|:---|
+| L3 Gateway | 192.168.50.1 | 6000 |
+| NAS | 192.168.50.100 | 9443 |
+| Blog | chals.kim | 443 |
 ---
 ### 3. Gateway로 파일을 보낸 경우
 ---
